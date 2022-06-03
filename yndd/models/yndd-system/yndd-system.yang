@@ -1,0 +1,173 @@
+module yndd-system {
+  yang-version 1.1;
+  namespace "urn:yndd/yndd-system";
+  prefix yndd-system;
+
+  //import yndd-common {
+  //  prefix yndd-comm;
+  //}
+ 
+
+  description
+    "This yang file gives a description of the system config";
+
+  revision 2022-06-01 {
+    description
+      "NDD 0.0.1";
+  }
+
+  typedef action {
+    type enumeration {
+      enum GET {
+        //value 0;
+        description
+          "Get the resource";
+      }
+      enum DELETE {
+        //value 1;
+        description
+          "Delete the resource";
+      }
+      enum CREATE {
+       // value 2;
+        description
+          "Create the resource";
+      }
+      enum UPDATE {
+        //value 3;
+        description
+          "Update the resource";
+      }
+      enum GETRESOURCENAME {
+        //value 3;
+        description
+          "Get the reosurce name";
+      }
+    }
+    description
+      "The state of the BFD session according to the system referred to by the context of the leaf";
+  }
+
+  typedef status {
+    type enumeration {
+      enum None {
+        //value 0;
+        description
+          "No status";
+      }
+      enum SUCCESS {
+        //value 1;
+        description
+          "the resource action succeeded";
+      }
+      enum FAILED {
+       // value 2;
+        description
+          "the resource action failed";
+      }
+      enum PENDING {
+        //value 3;
+        description
+          "the action is pending";
+      }
+    }
+    description
+      "The state of the BFD session according to the system referred to by the context of the leaf";
+  }
+  
+
+  grouping cache-top {
+    container cache {
+      description
+        "Context to configure Cache parameters";
+      
+      leaf exhausted {
+        description
+          "Defines if the target is exhausted";
+        type uint32;
+      }
+
+      leaf exhaustedNbr {
+        description
+          "Defines how often the target was exhausted";
+        type uint64;
+      }
+
+      leaf update {
+        description
+          "Defines if the cache was updated";
+        type boolean;
+      }
+    }
+  }
+
+  grouping gvk-top {
+    container gvk {
+      description
+        "Context to configure GVK parameters";
+      list subinterface {
+        key "name";
+        description
+          "List of gvk resources";
+        leaf name {
+          description
+            "Name of the gvk resource";
+          type string;
+        }
+        leaf action {
+          description
+            "Action to be executed on the resourc";
+          type action;
+        }
+        leaf-list delete {
+          description
+            "Delete paths";
+          type string;
+        }
+        leaf-list path {
+          description
+            "Delete paths";
+          type string;
+        }
+        leaf spec {
+          description
+            "The resource spec encoded as a string which contains json";
+          type string;
+        }
+        list update {
+          key "path";
+          description
+            "List of updates";
+          leaf path {
+            description
+              "the path of the update";
+            type string;
+          }
+          leaf value {
+            description
+              "the value of the update";
+            type string;
+          }
+        }
+        leaf status {
+          description
+            "The status of the resources";
+          type status;
+        }
+        leaf reason {
+          description
+            "The resource why a resource is in a certain status";
+          type string;
+        }
+        leaf attempt {
+          description
+            "Amount of time the resource was tried to the target";
+          type uint32;
+        }
+      }
+    }
+  }
+  uses cache-top;
+  uses gvk-top;
+  
+}

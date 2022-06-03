@@ -1,0 +1,14 @@
+module yndd-common {
+  yang-version 1.1;
+  namespace "urn:yndd/yndd-common";
+  prefix yndd-common;
+
+  description
+    "This yang file defines common typdef used in yndd";
+
+  revision 2022-06-01 {
+    description
+      "NDD 0.0.1";
+  }
+  
+}
