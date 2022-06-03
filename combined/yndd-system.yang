@@ -16,7 +16,7 @@ module yndd-system {
       "NDD 0.0.1";
   }
 
-  typedef action {
+  typedef resourceAction {
     type enumeration {
       enum GET {
         //value 0;
@@ -48,7 +48,7 @@ module yndd-system {
       "The state of the BFD session according to the system referred to by the context of the leaf";
   }
 
-  typedef status {
+  typedef resourceStatus {
     type enumeration {
       enum None {
         //value 0;
@@ -102,68 +102,64 @@ module yndd-system {
   }
 
   grouping gvk-top {
-    container gvk {
+    list gvk {
+      key "name";
       description
-        "Context to configure GVK parameters";
-      list subinterface {
-        key "name";
+        "List of gvk resources";
+      leaf name {
         description
-          "List of gvk resources";
-        leaf name {
+          "Name of the gvk resource";
+        type string;
+      }
+      leaf action {
+        description
+          "Action to be executed on the resourc";
+        type resourceAction;
+      }
+      leaf-list delete {
+        description
+          "Delete paths";
+        type string;
+      }
+      leaf-list path {
+        description
+          "Delete paths";
+        type string;
+      }
+      leaf spec {
+        description
+          "The resource spec encoded as a string which contains json";
+        type string;
+      }
+      list update {
+        key "path";
+        description
+          "List of updates";
+        leaf path {
           description
-            "Name of the gvk resource";
+            "the path of the update";
           type string;
         }
-        leaf action {
+        leaf value {
           description
-            "Action to be executed on the resourc";
-          type action;
-        }
-        leaf-list delete {
-          description
-            "Delete paths";
+            "the value of the update";
           type string;
         }
-        leaf-list path {
-          description
-            "Delete paths";
-          type string;
-        }
-        leaf spec {
-          description
-            "The resource spec encoded as a string which contains json";
-          type string;
-        }
-        list update {
-          key "path";
-          description
-            "List of updates";
-          leaf path {
-            description
-              "the path of the update";
-            type string;
-          }
-          leaf value {
-            description
-              "the value of the update";
-            type string;
-          }
-        }
-        leaf status {
-          description
-            "The status of the resources";
-          type status;
-        }
-        leaf reason {
-          description
-            "The resource why a resource is in a certain status";
-          type string;
-        }
-        leaf attempt {
-          description
-            "Amount of time the resource was tried to the target";
-          type uint32;
-        }
+      }
+      leaf status {
+        description
+          "The status of the resources";
+        type resourceStatus;
+      }
+      leaf reason {
+        description
+          "The resource why a resource is in a certain status";
+        type string;
+      }
+      leaf attempt {
+        description
+          "Amount of time the resource was tried to the target";
+        type uint32;
       }
     }
   }
