@@ -1,0 +1,43 @@
+module yndd-state {
+  yang-version 1.1;
+  namespace "urn:yndd/yndd-state";
+  prefix yndd-state;
+
+  import yndd-common {
+    prefix yndd-comm;
+  }
+ 
+
+  description
+    "This yang file gives a description of the state config";
+
+  revision 2022-06-01 {
+    description
+      "NDD 0.0.1";
+  }
+
+  grouping state-top {
+    list stateEntry {
+      key "name";
+      description
+        "List of state entries";
+      leaf name {
+        description
+          "Name of the state entry";
+        type string;
+      }
+      leaf prefix {
+        description
+          "state prefix";
+        type string;
+      }
+      leaf-list path {
+        description
+          "list of paths for which state is to be retrieved";
+        type string;
+      }
+    }
+  }
+
+  uses state-top;
+}

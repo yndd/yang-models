@@ -11,4 +11,20 @@ module yndd-common {
       "NDD 0.0.1";
   }
   
+  typedef adminState {
+    type enumeration {
+      enum ENABLE {
+        //value 0;
+        description
+          "admin enable";
+      }
+      enum DISABLE {
+        //value 1;
+        description
+          "admin disable";
+      }
+    }
+    description
+      "The admin state of the resource";
+  }
 }
